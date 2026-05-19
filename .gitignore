@@ -1,8 +1,10 @@
-#add the keys folder here
 keys/
 datafiles/
 .env
 .env.local
 .env.example
-doc/
+docs/
+db/
 .vscode/
+tools/
+AGENTS.md
