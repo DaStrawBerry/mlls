@@ -1,3 +1,6 @@
 [submodule "MLLS"]
 	path = MLLS
 	url = git@gitlab.com:hoanglonghoangmang/mlls_api.git
+[submodule "mlls-mobile"]
+	path = mlls-mobile
+	url = git@gitlab.com:hoanglonghoangmang/mlls-mobile.git
