@@ -1,0 +1,55 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: ${DB_CONTAINER_NAME}
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ${POSTGRES_DATA_URL}:/var/lib/postgresql/data
+      - ${POSTGRES_INIT_URL}:/docker-entrypoint-initdb.d
+    networks:
+      - backend
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin-ui
+    ports:
+      - "8088:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    depends_on:
+      - postgres
+    networks:
+      - backend
+  api:
+    build: ${MLLS_API_SRC}
+    container_name: ${BE_CONTAINER_NAME}
+    ports:
+      - "9099:9090"
+    environment:
+      #Server
+      SERVER_PORT: ${SERVER_PORT}
+      SERVER_ADDRESS: ${SERVER_ADDRESS}
+      #Database
+      DB_LANGUAGE_URL: ${DB_LANGUAGE_URL}
+      DB_MEMORY_URL: ${DB_MEMORY_URL}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DDL_AUTO_RULES: ${DDL_AUTO_RULE}
+
+      #Api
+      API_DOC_TITLE: ${API_DOC_TITLE}
+      API_DOC_VERSION: ${API_DOC_VERSION}
+      API_DOC_DESCRIPTION: ${API_DOC_DESCRIPTION}
+      
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+networks:
+  backend:

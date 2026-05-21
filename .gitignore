@@ -1,5 +1,4 @@
 keys/
-datafiles/
 .env
 .env.local
 .env.example
@@ -8,3 +7,4 @@ db/
 .vscode/
 tools/
 AGENTS.md
+.bk/
